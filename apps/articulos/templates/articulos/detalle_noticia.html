@@ -1,0 +1,28 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block content %}
+  <h1>{{ noticia.titulo }}</h1>
+  <img src="{{ noticia.foto.url }}" alt="{{ noticia.titulo }}" class="img-fluid">
+  <p>{{ noticia.detalle }}</p>
+
+  <hr>
+  <h2>Comentarios</h2>
+  <div class="comentarios">
+    {% for comentario in comentarios %}
+      <div class="comentario" style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+        <p>{{ comentario.contenido }}</p>
+        <small>Publicado el {{ comentario.fecha_publicacion|date:"d/m/Y H:i" }}</small>
+        <span style="margin-left: 10px;">{{ comentario.reaction_emoji }}</span>
+        {% if comentario.etiquetado_spam %}
+          <strong style="color: red; margin-left: 10px;">[Spam/Ofensivo]</strong>
+        {% endif %}
+      </div>
+    {% empty %}
+      <p>No hay comentarios aún. ¡Sé el primero en comentar!</p>
+    {% endfor %}
+  </div>
+
+  <!-- Enlace para agregar un comentario -->
+  <a href="{% url 'agregar_comentario' noticia.id %}" class="btn btn-primary">Agregar Comentario</a>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Noticias{% endblock %}
+
+{% block content %}
+    <h1>Noticias</h1>
+    <div class="noticias">
+        {% for noticia in noticias %}
+            <div class="noticia">
+                <a href="{% url 'detalle_noticia' noticia.id %}">
+                    <img src="{{ noticia.foto.url }}" alt="{{ noticia.titulo }}">
+                </a>
+                <h2><a href="{% url 'detalle_noticia' noticia.id %}">{{ noticia.titulo }}</a></h2>
+                <p>{{ noticia.fecha_publicacion }}</p>
+                <p>{{ noticia.resumen }}</p>
+                <a href="{% url 'detalle_noticia' noticia.id %}">Ver más</a>
+            </div>
+        {% empty %}
+            <p>No hay noticias disponibles.</p>
+        {% endfor %}
+    </div>
+{% endblock %}
